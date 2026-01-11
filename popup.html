@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comine</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <div class="bg-container">
+      <div class="bg-logo"></div>
+    </div>
+
+    <div class="titlebar">
+      <div class="titlebar-brand">
+        <svg class="titlebar-icon" viewBox="0 0 1024 1024" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M300.29 223.05L612.418 0L844 298.937L799.054 760.396L472.441 1024L158 592.095L300.29 223.05ZM754.854 722.285C700.283 629.788 671.5 524.355 671.5 416.959V323.5L464.5 633.5L754.854 722.285Z"/>
+        </svg>
+      </div>
+      <div class="titlebar-status">
+        <span class="status-dot"></span>
+        <span class="status-text">Disconnected</span>
+      </div>
+    </div>
+
+    <div class="main-layout">
+      <aside class="sidebar">
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-page="download" title="Download">
+            <!-- download2 icon -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path opacity="0.5" d="M17 9.002C19.175 9.014 20.353 9.111 21.121 9.879C22 10.758 22 12.172 22 15V16C22 18.829 22 20.243 21.121 21.122C20.243 22 18.828 22 16 22H8C5.172 22 3.757 22 2.879 21.122C2 20.242 2 18.829 2 16V15C2 12.172 2 10.758 2.879 9.879C3.647 9.111 4.825 9.014 7 9.002" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M12 2V15M12 15L9 11.5M12 15L15 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="nav-item" data-page="history" title="Downloads">
+            <!-- history icon -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path opacity="0.5" d="M12 8V12L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4.338 6.87101L3.588 6.87401C3.58879 7.07171 3.66761 7.26111 3.80731 7.401C3.94701 7.54089 4.1363 7.61996 4.334 7.62101L4.338 6.87101ZM6.88 7.63301C6.97849 7.63347 7.07611 7.61453 7.16728 7.57726C7.25845 7.53999 7.34139 7.48513 7.41136 7.41582C7.48132 7.3465 7.53695 7.26408 7.57507 7.17326C7.61319 7.08244 7.63304 6.985 7.6335 6.88651C7.63396 6.78802 7.61502 6.6904 7.57775 6.59923C7.54048 6.50806 7.48562 6.42513 7.41631 6.35516C7.34699 6.28519 7.26456 6.22956 7.17375 6.19144C7.08293 6.15333 6.98549 6.13347 6.887 6.13301L6.88 7.63301ZM5.075 4.32101C5.07447 4.22252 5.05456 4.1251 5.01638 4.0343C4.9782 3.94351 4.92252 3.86113 4.8525 3.79185C4.78249 3.72258 4.69951 3.66778 4.60832 3.63057C4.51712 3.59337 4.41949 3.57449 4.321 3.57501C4.22251 3.57554 4.12508 3.59546 4.03429 3.63363C3.9435 3.67181 3.86111 3.72749 3.79184 3.79751C3.72257 3.86752 3.66777 3.9505 3.63056 4.04169C3.59335 4.13289 3.57447 4.23052 3.575 4.32901L5.075 4.32101ZM3.827 10.785C3.84137 10.687 3.83618 10.5871 3.81173 10.4911C3.78727 10.3951 3.74404 10.3049 3.68453 10.2257C3.62502 10.1465 3.5504 10.0799 3.465 10.0297C3.37959 9.97945 3.28508 9.94666 3.18694 9.93319C3.08879 9.91971 2.98894 9.92582 2.89317 9.95115C2.79739 9.97648 2.70759 10.0205 2.62893 10.0808C2.55028 10.141 2.48434 10.2162 2.43492 10.3021C2.3855 10.3879 2.35358 10.4827 2.341 10.581L3.827 10.785ZM18.862 5.13801C15.042 1.31801 8.869 1.27801 5.074 5.07401L6.134 6.13401C9.334 2.93501 14.557 2.95401 17.802 6.19801L18.862 5.13801ZM5.138 18.862C8.958 22.682 15.131 22.722 18.926 18.926L17.866 17.866C14.666 21.065 9.443 21.046 6.198 17.802L5.138 18.862ZM18.926 18.926C22.721 15.131 22.682 8.95801 18.862 5.13801L17.802 6.19801C21.046 9.44301 21.065 14.666 17.866 17.866L18.926 18.926ZM5.074 5.07401L3.807 6.34001L4.868 7.40001L6.134 6.13401L5.074 5.07401ZM4.334 7.62101L6.88 7.63301L6.887 6.13301L4.342 6.12101L4.334 7.62101ZM5.088 6.86701L5.075 4.32101L3.575 4.32901L3.588 6.87401L5.088 6.86701ZM2.34 10.58C2.13438 12.0826 2.27995 13.6124 2.76526 15.0492C3.25057 16.4861 4.0624 17.7908 5.137 18.861L6.197 17.801C5.2861 16.8944 4.59789 15.7888 4.18649 14.5713C3.77508 13.3537 3.65168 12.0573 3.826 10.784L2.34 10.58Z" fill="currentColor"/>
+            </svg>
+            <span class="nav-badge hidden">0</span>
+          </button>
+          <button class="nav-item" data-page="settings" title="Settings">
+            <!-- cog icon -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="1.5"/>
+              <path opacity="0.5" d="M13.765 2.152C13.398 2 12.932 2 12 2C11.068 2 10.602 2 10.235 2.152C9.99217 2.25251 9.77154 2.3999 9.58572 2.58572C9.39989 2.77155 9.25251 2.99218 9.15199 3.235C9.05999 3.458 9.02299 3.719 9.00899 4.098C9.00248 4.37193 8.9266 4.63973 8.78843 4.87635C8.65027 5.11298 8.45435 5.31069 8.21899 5.451C7.9798 5.58477 7.71058 5.65567 7.43652 5.65707C7.16247 5.65847 6.89254 5.59032 6.65199 5.459C6.31599 5.281 6.07299 5.183 5.83199 5.151C5.30631 5.08187 4.77469 5.22431 4.35399 5.547C4.03999 5.79 3.80599 6.193 3.33999 7C2.87399 7.807 2.63999 8.21 2.58899 8.605C2.55463 8.86545 2.57191 9.13012 2.63986 9.38389C2.70781 9.63767 2.82508 9.87556 2.98499 10.084C3.13299 10.276 3.33999 10.437 3.66099 10.639C4.13399 10.936 4.43799 11.442 4.43799 12C4.43799 12.558 4.13399 13.064 3.66099 13.36C3.33999 13.563 3.13199 13.724 2.98499 13.916C2.82508 14.1244 2.70781 14.3623 2.63986 14.6161C2.57191 14.8699 2.55463 15.1345 2.58899 15.395C2.64099 15.789 2.87399 16.193 3.33899 17C3.80599 17.807 4.03899 18.21 4.35399 18.453C4.56243 18.6129 4.80033 18.7302 5.0541 18.7981C5.30787 18.8661 5.57254 18.8834 5.83299 18.849C6.07299 18.817 6.31599 18.719 6.65199 18.541C6.89254 18.4097 7.16247 18.3415 7.43652 18.3429C7.71058 18.3443 7.9798 18.4152 8.21899 18.549C8.70199 18.829 8.98899 19.344 9.00899 19.902C9.02299 20.282 9.05899 20.542 9.15199 20.765C9.25251 21.0078 9.39989 21.2284 9.58572 21.4143C9.77154 21.6001 9.99217 21.7475 10.235 21.848C10.602 22 11.068 22 12 22C12.932 22 13.398 22 13.765 21.848C14.0078 21.7475 14.2284 21.6001 14.4143 21.4143C14.6001 21.2284 14.7475 21.0078 14.848 20.765C14.94 20.542 14.977 20.282 14.991 19.902C15.011 19.344 15.298 18.828 15.781 18.549C16.0202 18.4152 16.2894 18.3443 16.5635 18.3429C16.8375 18.3415 17.1074 18.4097 17.348 18.541C17.684 18.719 17.927 18.817 18.167 18.849C18.4274 18.8834 18.6921 18.8661 18.9459 18.7981C19.1997 18.7302 19.4376 18.6129 19.646 18.453C19.961 18.211 20.194 17.807 20.66 17C21.126 16.193 21.36 15.79 21.411 15.395C21.4454 15.1345 21.4281 14.8699 21.3601 14.6161C21.2922 14.3623 21.1749 14.1244 21.015 13.916C20.867 13.724 20.66 13.563 20.339 13.361C20.1049 13.2184 19.9109 13.0187 19.775 12.7807C19.6391 12.5427 19.5658 12.2741 19.562 12C19.562 11.442 19.866 10.936 20.339 10.64C20.66 10.437 20.868 10.276 21.015 10.084C21.1749 9.87556 21.2922 9.63767 21.3601 9.38389C21.4281 9.13012 21.4454 8.86545 21.411 8.605C21.359 8.211 21.126 7.807 20.661 7C20.194 6.193 19.961 5.79 19.646 5.547C19.4376 5.38709 19.1997 5.26981 18.9459 5.20187C18.6921 5.13392 18.4274 5.11664 18.167 5.151C17.927 5.183 17.684 5.281 17.347 5.459C17.1066 5.59014 16.8368 5.6582 16.563 5.6568C16.2891 5.6554 16.0201 5.58459 15.781 5.451C15.5456 5.31069 15.3497 5.11298 15.2116 4.87635C15.0734 4.63973 14.9975 4.37193 14.991 4.098C14.977 3.718 14.941 3.458 14.848 3.235C14.7475 2.99218 14.6001 2.77155 14.4143 2.58572C14.2284 2.3999 14.0078 2.25251 13.765 2.152Z" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </button>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <div class="page active" id="page-download">
+          <div class="page-header">
+            <h1>Comine</h1>
+            <p class="subtitle">Paste a URL to download</p>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="url-input-wrapper">
+            <!-- link icon -->
+            <svg class="url-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path opacity="0.5" d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <input type="text" id="url-input" placeholder="Paste video URL..." autocomplete="off">
+            <button id="download-btn" class="download-btn" title="Quick Download">
+              <!-- download icon -->
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path opacity="0.5" d="M3 15C3 17.828 3 19.243 3.879 20.121C4.757 21 6.172 21 9 21H15C17.828 21 19.243 21 20.121 20.121C21 19.243 21 17.828 21 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="options-section">
+            <div class="section-header">
+              <span class="section-title">Session Options</span>
+              <span class="section-hint">Extension-only settings</span>
+            </div>
+
+            <div class="options-group">
+              <span class="group-label">Preset</span>
+              <div class="chip-row">
+                <button class="chip selected" data-preset="best">
+                  <!-- gallery icon -->
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+                    <path d="M2 13.438C2 9.66599 2 7.77999 3.172 6.60899C4.344 5.43799 6.229 5.43799 10 5.43799H14C17.771 5.43799 19.657 5.43799 20.828 6.60899C21.999 7.77999 22 9.66599 22 13.438C22 17.208 22 19.094 20.828 20.266C19.656 21.438 17.771 21.438 14 21.438H10C6.229 21.438 4.343 21.438 3.172 20.266C2.001 19.094 2 17.209 2 13.438Z" stroke="currentColor" stroke-width="1.5"/>
+                    <path opacity="0.5" d="M17.5 11.438C18.3284 11.438 19 10.7664 19 9.93799C19 9.10956 18.3284 8.43799 17.5 8.43799C16.6716 8.43799 16 9.10956 16 9.93799C16 10.7664 16.6716 11.438 17.5 11.438Z" stroke="currentColor" stroke-width="1.5"/>
+                  </svg>
+                  Best
+                </button>
+                <button class="chip" data-preset="music">
+                  <!-- headphones icon -->
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+                    <path opacity="0.5" d="M21 17V12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12V17" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M8 13.845C8 13.08 8 12.698 7.825 12.432C7.73875 12.2993 7.62222 12.189 7.485 12.11C7.214 11.954 6.848 11.99 6.117 12.062C4.885 12.183 4.269 12.244 3.827 12.576C3.60328 12.747 3.41624 12.9613 3.277 13.206C3 13.697 3 14.34 3 15.629V17.194C3 18.469 3 19.107 3.282 19.6C3.38867 19.7847 3.51933 19.9487 3.674 20.092C4.087 20.472 4.688 20.592 5.892 20.828C6.739 20.995 7.163 21.079 7.476 20.903C7.59228 20.8376 7.69428 20.7495 7.776 20.644C8 20.356 8 19.908 8 19.01V13.845ZM16 13.845C16 13.08 16 12.698 16.175 12.432C16.263 12.299 16.379 12.188 16.515 12.11C16.786 11.954 17.152 11.99 17.883 12.062C19.115 12.183 19.731 12.244 20.173 12.576C20.396 12.745 20.583 12.959 20.723 13.206C21 13.696 21 14.339 21 15.628V17.193C21 18.468 21 19.106 20.718 19.599C20.6113 19.7837 20.4807 19.9477 20.326 20.091C19.913 20.471 19.312 20.591 18.108 20.827C17.261 20.994 16.837 21.078 16.524 20.902C16.4077 20.8366 16.3057 20.7485 16.224 20.643C16 20.356 16 19.908 16 19.01V13.845Z" stroke="currentColor" stroke-width="1.5"/>
+                  </svg>
+                  Music
+                </button>
+                <button class="chip" data-preset="small">
+                  <!-- box icon -->
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+                    <path d="M15.578 3.382L17.578 4.432C19.729 5.561 20.805 6.125 21.403 7.14C22 8.154 22 9.417 22 11.942V12.059C22 14.583 22 15.846 21.403 16.86C20.805 17.875 19.729 18.44 17.578 19.569L15.578 20.618C13.822 21.539 12.944 22 12 22C11.056 22 10.178 21.54 8.422 20.618L6.422 19.568C4.271 18.439 3.195 17.875 2.597 16.86C2 15.846 2 14.583 2 12.06V11.943C2 9.418 2 8.155 2.597 7.141C3.195 6.126 4.271 5.561 6.422 4.433L8.422 3.383C10.178 2.461 11.056 2 12 2C12.944 2 13.822 2.46 15.578 3.382Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path opacity="0.5" d="M21 7.5L12 12M12 12L3 7.5M12 12V21.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  Small
+                </button>
+              </div>
+            </div>
+
+            <div class="options-group">
+              <span class="group-label">Quality</span>
+              <div class="settings-row">
+                <button class="setting-btn" id="video-quality-btn">
+                  <span class="setting-label">Video</span>
+                  <span class="setting-value">Max</span>
+                </button>
+                <button class="setting-btn" id="download-mode-btn">
+                  <span class="setting-label">Mode</span>
+                  <span class="setting-value">Auto</span>
+                </button>
+                <button class="setting-btn" id="audio-quality-btn">
+                  <span class="setting-label">Audio</span>
+                  <span class="setting-value">Best</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="options-group">
+              <span class="group-label">Post-processing</span>
+              <div class="checkbox-grid">
+                <label class="checkbox-item">
+                  <input type="checkbox" id="opt-remux">
+                  <span class="checkmark"></span>
+                  <span>Remux</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="opt-mp4">
+                  <span class="checkmark"></span>
+                  <span>Convert MP4</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="opt-thumbnail" checked>
+                  <span class="checkmark"></span>
+                  <span>Thumbnail</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="opt-metadata">
+                  <span class="checkmark"></span>
+                  <span>Clear metadata</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="options-group">
+              <span class="group-label">Authentication</span>
+              <div class="checkbox-grid">
+                <label class="checkbox-item full-width" title="Include browser cookies with each download for age-restricted or private content">
+                  <input type="checkbox" id="opt-cookies">
+                  <span class="checkmark"></span>
+                  <span>Include cookies per download</span>
+                  <button class="send-cookies-btn" id="send-cookies-btn" title="Send cookies to Comine app (saves permanently)">
+                    <span>Send to App</span>
+                    <svg viewBox="0 0 24 24" fill="none" width="12" height="12">
+                      <path d="M4 12h12M12 8l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="page-history">
+          <div class="page-header">
+            <h1>Downloads</h1>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="filter-row">
+            <div class="filter-chips">
+              <button class="filter-chip active" data-filter="all">All</button>
+              <button class="filter-chip" data-filter="active">Active</button>
+              <button class="filter-chip" data-filter="completed">Completed</button>
+            </div>
+            <div class="header-actions">
+              <button class="icon-btn" id="view-toggle" title="Toggle view">
+                <!-- widget2 grid icon -->
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path opacity="0.5" d="M2.5 6.5C2.5 4.614 2.5 3.672 3.086 3.086C3.672 2.5 4.614 2.5 6.5 2.5C8.386 2.5 9.328 2.5 9.914 3.086C10.5 3.672 10.5 4.614 10.5 6.5C10.5 8.386 10.5 9.328 9.914 9.914C9.328 10.5 8.386 10.5 6.5 10.5C4.614 10.5 3.672 10.5 3.086 9.914C2.5 9.328 2.5 8.386 2.5 6.5ZM13.5 17.5C13.5 15.614 13.5 14.672 14.086 14.086C14.672 13.5 15.614 13.5 17.5 13.5C19.386 13.5 20.328 13.5 20.914 14.086C21.5 14.672 21.5 15.614 21.5 17.5C21.5 19.386 21.5 20.328 20.914 20.914C20.328 21.5 19.386 21.5 17.5 21.5C15.614 21.5 14.672 21.5 14.086 20.914C13.5 20.328 13.5 19.386 13.5 17.5Z" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M2.5 17.5C2.5 15.614 2.5 14.672 3.086 14.086C3.672 13.5 4.614 13.5 6.5 13.5C8.386 13.5 9.328 13.5 9.914 14.086C10.5 14.672 10.5 15.614 10.5 17.5C10.5 19.386 10.5 20.328 9.914 20.914C9.328 21.5 8.386 21.5 6.5 21.5C4.614 21.5 3.672 21.5 3.086 20.914C2.5 20.328 2.5 19.386 2.5 17.5ZM13.5 6.5C13.5 4.614 13.5 3.672 14.086 3.086C14.672 2.5 15.614 2.5 17.5 2.5C19.386 2.5 20.328 2.5 20.914 3.086C21.5 3.672 21.5 4.614 21.5 6.5C21.5 8.386 21.5 9.328 20.914 9.914C20.328 10.5 19.386 10.5 17.5 10.5C15.614 10.5 14.672 10.5 14.086 9.914C13.5 9.328 13.5 8.386 13.5 6.5Z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+              </button>
+              <button class="icon-btn" id="refresh-btn" title="Refresh">
+                <!-- refresh icon -->
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12.079 3C7.442 3 3.679 6.72 3.679 11.333V13L2 11.333L3.679 13L5.359 11.333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M19.893 6.607C18.064 4.21 15.27 3 12.079 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path opacity="0.5" d="M11.921 21C16.558 21 20.321 17.28 20.321 12.667V11L22 12.667L20.321 11L18.641 12.667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path opacity="0.5" d="M4.107 17.393C5.936 19.79 8.73 21 11.921 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="downloads-container" id="downloads-container">
+            <div class="empty-state" id="empty-state">
+              <!-- download2 icon -->
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+                <path d="M12 16L12 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M9 11L11.2929 13.2929C11.6262 13.6262 11.7929 13.7929 12 13.7929C12.2071 13.7929 12.3738 13.6262 12.7071 13.2929L15 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 15C2 18.771 2 20.657 3.172 21.828C4.343 22.999 6.229 23 10 23H14C17.771 23 19.657 23 20.828 21.828C22 20.657 22 18.771 22 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+              </svg>
+              <span>No downloads yet</span>
+              <span class="empty-hint">Downloads from the app will appear here</span>
+            </div>
+            <div class="downloads-list hidden" id="downloads-list"></div>
+            <div class="downloads-grid hidden" id="downloads-grid"></div>
+          </div>
+        </div>
+
+        <div class="page" id="page-settings">
+          <div class="page-header">
+            <h1>Settings</h1>
+            <p class="subtitle">Extension configuration</p>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="settings-section">
+            <div class="section-header">
+              <span class="section-title">Connection</span>
+            </div>
+            
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-name">Local Host</span>
+                <span class="setting-desc">Comine app address</span>
+              </div>
+              <input type="text" id="local-host" class="setting-input" value="127.0.0.1">
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-name">Port</span>
+                <span class="setting-desc">Local server port</span>
+              </div>
+              <input type="number" id="local-port" class="setting-input small" value="9549">
+            </div>
+
+            <button class="btn primary" id="test-connection">Test Connection</button>
+          </div>
+
+          <div class="settings-section">
+            <div class="section-header">
+              <span class="section-title">Behavior</span>
+            </div>
+            
+            <label class="toggle-row">
+              <span class="toggle-label">Open app on download</span>
+              <input type="checkbox" id="open-app-toggle" class="toggle-input">
+              <span class="toggle-switch"></span>
+            </label>
+
+            <label class="toggle-row">
+              <span class="toggle-label">Inject buttons on websites</span>
+              <input type="checkbox" id="inject-buttons-toggle" class="toggle-input" checked>
+              <span class="toggle-switch"></span>
+            </label>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <span class="modal-title">Select Option</span>
+        <button class="modal-close" id="modal-close">
+          <!-- cross icon -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 5L5 19M5 5L9.5 9.5M14.5 14.5L19 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
