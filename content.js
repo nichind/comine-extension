@@ -96,7 +96,8 @@
     const iconOnly = innerWidth < 900;
     btn.className = 'comine-yt-btn' + (iconOnly ? '' : ' with-label');
     if (!iconOnly) btn.innerHTML += '<span class="comine-btn-label">Comine</span>';
-    const like = bar.querySelector('ytd-segmented-like-dislike-button-renderer');
+    const like = bar.querySelector('segmented-like-dislike-button-view-model') ||
+                 bar.querySelector('ytd-segmented-like-dislike-button-renderer');
     if (like) like.insertAdjacentElement('beforebegin', btn);
     else bar.prepend(btn);
     return true;

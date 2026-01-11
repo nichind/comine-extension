@@ -155,6 +155,40 @@ body {
   flex-shrink: 0;
 }
 
+.sidebar-spacer {
+  flex: 1;
+}
+
+.sidebar-social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.social-link {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.social-link:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.social-link svg {
+  width: 16px;
+  height: 16px;
+}
+
 .sidebar-nav {
   display: flex;
   flex-direction: column;
