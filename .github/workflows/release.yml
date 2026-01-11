@@ -34,7 +34,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/comine-browser-${{ steps.version.outputs.VERSION }}.zip
+            dist/comine-extension-${{ steps.version.outputs.VERSION }}.zip
           generate_release_notes: true
           draft: false
           prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
