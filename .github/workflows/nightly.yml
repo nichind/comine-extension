@@ -1,0 +1,57 @@
+name: Nightly (pre-release)
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build extension
+        run: npm run build
+
+      - name: Prepare nightly asset
+        run: |
+          rm -f dist/comine-browser-nightly.zip
+          # Build script outputs dist/comine-browser-${manifest.version}.zip
+          ZIP=$(ls -1 dist/comine-browser-*.zip | head -n 1)
+          if [ -z "$ZIP" ]; then
+            echo "No zip produced in dist/"
+            ls -la dist || true
+            exit 1
+          fi
+          cp "$ZIP" dist/comine-browser-nightly.zip
+
+      - name: Create/update nightly prerelease and upload asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG=nightly
+          TITLE="Comine Browser Nightly"
+          NOTES="Automated build from ${GITHUB_SHA}"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release edit "$TAG" --title "$TITLE" --notes "$NOTES" --prerelease --target "$GITHUB_SHA"
+          else
+            gh release create "$TAG" --title "$TITLE" --notes "$NOTES" --prerelease --target "$GITHUB_SHA"
+          fi
+
+          gh release upload "$TAG" dist/comine-browser-nightly.zip --clobber

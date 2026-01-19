@@ -40,7 +40,9 @@ const LocalAPI = {
   async cancel(url) { return localRequest('/cancel', { method: 'POST', body: JSON.stringify({ url }) }); },
   async status() { return localRequest('/status'); },
   async history() { return localRequest('/history'); },
-  async sendCookies(domain, cookies) { return localRequest('/cookies', { method: 'POST', body: JSON.stringify({ domain, cookies }) }); },
+  async sendCookies(domain, cookies, sourceUrl = null) {
+    return localRequest('/cookies', { method: 'POST', body: JSON.stringify({ domain, sourceUrl, cookies }) });
+  },
 };
 
 async function getCookiesForDomains(domains) {
@@ -55,6 +57,24 @@ async function getCookiesForDomains(domains) {
   return allCookies.length > 0 ? allCookies : null;
 }
 
+async function getCookiesForUrl(url) {
+  if (!url || typeof url !== 'string') return null;
+  let parsed;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return null;
+  }
+  if (!/^https?:$/.test(parsed.protocol)) return null;
+
+  const cookies = await chrome.cookies.getAll({ url });
+  const formatted = cookies.map(c => ({
+    name: c.name, value: c.value, domain: c.domain, path: c.path,
+    secure: c.secure, httpOnly: c.httpOnly, expirationDate: c.expirationDate || null,
+  }));
+  return { domain: parsed.hostname, cookies: formatted };
+}
+
 chrome.runtime.onMessage.addListener((msg, sender, respond) => {
   (async () => {
     try {
@@ -64,7 +84,12 @@ chrome.runtime.onMessage.addListener((msg, sender, respond) => {
         case 'DOWNLOAD': {
           let cookies = msg.cookies || null;
           if (!cookies && config.optCookies) {
-            cookies = await getCookiesForDomains(['youtube.com', 'youtu.be', 'google.com']);
+            try {
+              const result = await getCookiesForUrl(msg.url);
+              cookies = result?.cookies || null;
+            } catch {
+              cookies = null;
+            }
           }
           await LocalAPI.download(msg.url, msg.title, msg.thumbnail, msg.openApp, msg.options, cookies);
           respond({ success: true });
@@ -94,8 +119,19 @@ chrome.runtime.onMessage.addListener((msg, sender, respond) => {
             name: c.name, value: c.value, domain: c.domain, path: c.path,
             secure: c.secure, httpOnly: c.httpOnly, expirationDate: c.expirationDate || null,
           }));
-          await LocalAPI.sendCookies(msg.domain, formatted);
-          respond({ success: true, count: formatted.length });
+          await LocalAPI.sendCookies(msg.domain, formatted, null);
+          respond({ success: true, domain: msg.domain, count: formatted.length });
+          break;
+        }
+
+        case 'SEND_COOKIES_FOR_URL': {
+          const result = await getCookiesForUrl(msg.url);
+          if (!result) {
+            respond({ success: false, error: 'Invalid URL or unsupported scheme' });
+            break;
+          }
+          await LocalAPI.sendCookies(result.domain, result.cookies, msg.url);
+          respond({ success: true, domain: result.domain, count: result.cookies.length });
           break;
         }
         

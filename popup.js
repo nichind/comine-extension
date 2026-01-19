@@ -120,18 +120,32 @@ async function saveConfig() {
 }
 
 async function sendCookiesToApp() {
-  const domains = ['youtube.com', 'youtu.be', 'google.com'];
   const sendBtn = $('#send-cookies-btn');
   if (sendBtn) { sendBtn.disabled = true; sendBtn.classList.add('loading'); }
   
   try {
-    let totalCount = 0;
-    for (const domain of domains) {
-      const response = await chrome.runtime.sendMessage({ type: 'SEND_COOKIES', domain });
-      if (response?.success) totalCount += response.count || 0;
-      else if (response?.error) throw new Error(response.error);
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const tabUrl = tab?.url || '';
+    if (!tabUrl || !/^https?:/i.test(tabUrl)) {
+      throw new Error('Open a website tab to send its cookies');
     }
-    showToast(`${totalCount} cookies sent to Comine!`, 'success');
+
+    // Try to request broad host permission once (best UX for "send cookies from current site").
+    // If denied, we still attempt the request; background will report a permission error.
+    try {
+      const hasAllUrls = await chrome.permissions.contains({ origins: ['<all_urls>'] });
+      if (!hasAllUrls) {
+        await chrome.permissions.request({ origins: ['<all_urls>'] });
+      }
+    } catch {
+      // Ignore; we'll rely on background error handling.
+    }
+
+    const response = await chrome.runtime.sendMessage({ type: 'SEND_COOKIES_FOR_URL', url: tabUrl });
+    if (!response?.success) throw new Error(response?.error || 'Failed to send cookies');
+
+    const domain = response.domain || new URL(tabUrl).hostname;
+    showToast(`${response.count || 0} cookies sent (${domain})`, 'success');
   } catch (err) {
     const message = err.message || 'Failed to send cookies';
     showToast(message.includes('fetch') || message.includes('connect') ? 'Comine app is not running' : message, 'error');

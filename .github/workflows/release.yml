@@ -19,6 +19,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
           
       - name: Install dependencies
         run: npm ci
@@ -28,13 +30,30 @@ jobs:
         
       - name: Get version from tag
         id: version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+          if [[ "$VERSION" == *-* ]]; then
+            echo "IS_PRERELEASE=true" >> $GITHUB_OUTPUT
+          else
+            echo "IS_PRERELEASE=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Verify manifest version matches tag
+        run: |
+          MANIFEST_VERSION=$(node -p "require('./manifest.json').version")
+          if [ "$MANIFEST_VERSION" != "${{ steps.version.outputs.VERSION }}" ]; then
+            echo "manifest.json version ($MANIFEST_VERSION) does not match tag version (${{ steps.version.outputs.VERSION }})"
+            exit 1
+          fi
         
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/comine-extension-${{ steps.version.outputs.VERSION }}.zip
+            dist/comine-browser-${{ steps.version.outputs.VERSION }}.zip
+          name: Comine Browser v${{ steps.version.outputs.VERSION }}
           generate_release_notes: true
           draft: false
-          prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
+          prerelease: ${{ steps.version.outputs.IS_PRERELEASE == 'true' }}
