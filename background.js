@@ -1,12 +1,13 @@
-const STORAGE_KEYS = { LOCAL_HOST: 'localHost', LOCAL_PORT: 'localPort', OPT_COOKIES: 'optCookies' };
-const DEFAULTS = { LOCAL_HOST: '127.0.0.1', LOCAL_PORT: 9549 };
+const STORAGE_KEYS = { LOCAL_HOST: 'localHost', LOCAL_PORT: 'localPort', LOCAL_TOKEN: 'localToken', OPT_COOKIES: 'optCookies' };
+const DEFAULTS = { LOCAL_HOST: '127.0.0.1', LOCAL_PORT: 9549, LOCAL_TOKEN: '' };
 
-let config = { localHost: DEFAULTS.LOCAL_HOST, localPort: DEFAULTS.LOCAL_PORT, optCookies: false };
+let config = { localHost: DEFAULTS.LOCAL_HOST, localPort: DEFAULTS.LOCAL_PORT, localToken: DEFAULTS.LOCAL_TOKEN, optCookies: false };
 
 async function loadConfig() {
   const stored = await chrome.storage.local.get(Object.values(STORAGE_KEYS));
   config.localHost = stored[STORAGE_KEYS.LOCAL_HOST] || DEFAULTS.LOCAL_HOST;
   config.localPort = parseInt(stored[STORAGE_KEYS.LOCAL_PORT]) || DEFAULTS.LOCAL_PORT;
+  config.localToken = stored[STORAGE_KEYS.LOCAL_TOKEN] || DEFAULTS.LOCAL_TOKEN;
   config.optCookies = stored[STORAGE_KEYS.OPT_COOKIES] ?? false;
 }
 
@@ -15,6 +16,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
   for (const [key, { newValue }] of Object.entries(changes)) {
     if (key === STORAGE_KEYS.LOCAL_HOST) config.localHost = newValue || DEFAULTS.LOCAL_HOST;
     else if (key === STORAGE_KEYS.LOCAL_PORT) config.localPort = parseInt(newValue) || DEFAULTS.LOCAL_PORT;
+    else if (key === STORAGE_KEYS.LOCAL_TOKEN) config.localToken = newValue || DEFAULTS.LOCAL_TOKEN;
     else if (key === STORAGE_KEYS.OPT_COOKIES) config.optCookies = newValue ?? false;
   }
 });
@@ -24,9 +26,18 @@ async function localRequest(path, options = {}) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
   try {
-    const res = await fetch(url, { ...options, signal: controller.signal, headers: { 'Content-Type': 'application/json', ...options.headers } });
+    const headers = { 'Content-Type': 'application/json', ...options.headers };
+    if (config.localToken) headers['X-Comine-Token'] = config.localToken;
+    const res = await fetch(url, { ...options, signal: controller.signal, headers });
     clearTimeout(timeout);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) {
+      if (res.status === 401) {
+        throw new Error(
+          'Unauthorized (HTTP 401). Extension token is missing/mismatched; update Settings → Token.'
+        );
+      }
+      throw new Error(`HTTP ${res.status}`);
+    }
     const text = await res.text();
     return text ? JSON.parse(text) : null;
   } catch (e) { clearTimeout(timeout); throw e; }
